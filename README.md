@@ -21,6 +21,6 @@ Configurable Environment – Run tests on different environments (QA, UAT, PROD)
 
 Centralized Result Storage – Stores all execution data in database for reporting and analytics.
 
-🚦 Status Dashboard – Visual view of test execution health and trends.
+Status Dashboard – Visual view of test execution health and trends.
 
-🔗 CI/CD Ready Design – Can be integrated with Jenkins/GitHub Actions for continuous testing.
+CI/CD Ready Design – Can be integrated with Jenkins/GitHub Actions for continuous testing.
