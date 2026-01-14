@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Execution Results</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            background: #f1f3f6;
+            text-align: left;
+            padding: 12px;
+            color: #34495e;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eaeaea;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: #f9fbff;
+        }
+
+        .status-pass {
+            color: #1e8449;
+            background: #e9f7ef;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-fail {
+            color: #c0392b;
+            background: #fdecea;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .footer-link {
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+            color: #ffffff;
+            background: #2c3e50;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .footer-link:hover {
+            background: #1a252f;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>🧪 Execution Results</h2>
+
+<div class="card">
+    <table>
+        <thead>
+        <tr>
+            <th>Test Case ID</th>
+            <th>Test Case Name</th>
+            <th>Status</th>
+            <th>Execution Time (ms)</th>
+            <th>Executed At</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="r : ${results}">
+            <td th:text="${r.testCase.id}"></td>
+            <td th:text="${r.testCase.name}"></td>
+
+            <td>
+                    <span th:text="${r.status}"
+                          th:class="${r.status == 'PASS'} ? 'status-pass' : 'status-fail'">
+                    </span>
+            </td>
+
+            <td th:text="${r.executionTime}"></td>
+            <td th:text="${r.executedAt}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<br/>
+
+<a class="footer-link" th:href="@{/ui/dashboard}">
+    ⬅ Back to Dashboard
+</a>
+
+</body>
+</html>

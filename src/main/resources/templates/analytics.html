@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Execution Dashboard</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            background: linear-gradient(135deg, #f4f6f9, #e9eef5);
+            margin: 0;
+            padding: 20px;
+            color: #2c3e50;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+        }
+
+        /* ===== STATUS BADGES ===== */
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge-running {
+            background: #f39c12;
+        }
+
+        .badge-completed {
+            background: #2ecc71;
+        }
+
+        .badge-pass {
+            background: #27ae60;
+        }
+
+        .badge-fail {
+            background: #e74c3c;
+        }
+
+        /* ===== GRID ===== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .info-box label {
+            font-size: 13px;
+            color: #7f8c8d;
+            display: block;
+        }
+
+        .info-box span {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* ===== TABLE ===== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        table th {
+            background: #34495e;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background: #f2f6fa;
+        }
+
+        /* ===== ACTIONS ===== */
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .actions a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .actions a:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🚀 Execution Dashboard</h1>
+
+<div class="container">
+
+    <!-- ===== EXECUTION RUN INFO ===== -->
+    <div class="card">
+        <h2>Execution Summary</h2>
+
+        <div class="grid">
+            <div class="info-box">
+                <label>Execution ID</label>
+                <span th:text="${run.id}"></span>
+            </div>
+
+            <div class="info-box">
+                <label>Status</label>
+                <span class="badge"
+                      th:classappend="${run.status == 'RUNNING'} ? 'badge-running' : 'badge-completed'"
+                      th:text="${run.status}">
+                </span>
+            </div>
+
+            <div class="info-box">
+                <label>Started At</label>
+                <span th:text="${run.startedAt}"></span>
+            </div>
+
+            <div class="info-box">
+                <label>Finished At</label>
+                <span th:text="${run.finishedAt != null ? run.finishedAt : 'In Progress'}"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TEST RESULTS ===== -->
+    <div class="card">
+        <h2>Test Case Results</h2>
+
+        <table>
+            <tr>
+                <th>Test Case ID</th>
+                <th>Status</th>
+                <th>Execution Time (ms)</th>
+                <th>Executed At</th>
+            </tr>
+
+            <tr th:each="tr : ${results}">
+                <td th:text="${tr.testCaseId}"></td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${tr.status == 'PASS'} ? 'badge-pass' : 'badge-fail'"
+                          th:text="${tr.status}">
+                    </span>
+                </td>
+                <td th:text="${tr.executionTime}"></td>
+                <td th:text="${tr.executedAt}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <div class="actions">
+        <a th:href="@{/ui/dashboard}">⬅ Back to Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>
